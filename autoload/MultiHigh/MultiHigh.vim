@@ -26,9 +26,21 @@ function! s:initCounter()
 endfunction
 
 
+function! s:searchKeyIsFound(searchKey)
+    try
+        silent execute ':%s/'  . a:searchKey . '//gn'
+    catch /E486.*/
+        return 0
+    endtry
+    return 1
+endfunction
 
 
 function! MultiHigh#MultiHigh#Apply(searchKey)
+    if !s:searchKeyIsFound(a:searchKey)
+        return
+    endif
+
     if !exists('b:counter') || len(s:color) <= b:counter
         call s:initCounter()
     endif
@@ -64,7 +76,7 @@ function! s:createGroupName(num)
 endfunction
 
 function! s:clearHighlight(groupName)
-    if exists('b:matchId') 
+    if exists('b:matchId')
     \       && has_key(b:matchId, a:groupName)
         call matchdelete(b:matchId[a:groupName])
         call remove(b:matchId, a:groupName)
@@ -84,7 +96,7 @@ function! s:createSmartPat(pat)
     if !&ignorecase
         return '\C' . a:pat
     elseif match(a:pat, '\C[A-Z]') != -1
-    \       && &ignorecase 
+    \       && &ignorecase
     \       && &smartcase
         return '\C' . a:pat
     else
