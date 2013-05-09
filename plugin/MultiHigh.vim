@@ -1,7 +1,8 @@
-command! -nargs=+ MultiHighLightNext       : call MultiHigh#MultiHigh#Apply("<args>")
-\                                           | execute '/' . "<args>"
-command! -nargs=+ MultiHighLightPrevious   : call MultiHigh#MultiHigh#Apply("<args>")
-\                                           | execute '?' . "<args>"
+" TODO シングルクウォーテーションに対応させる
+command! -nargs=+ MultiHighLightNext       : call MultiHigh#MultiHigh#Apply('<args>')
+\                                           | execute '/' . '<args>'
+command! -nargs=+ MultiHighLightPrevious   : call MultiHigh#MultiHigh#Apply('<args>')
+\                                           | execute '?' . '<args>'
 
 command! -nargs=0 MultiHighLightClear : call MultiHigh#MultiHigh#Clear()
 
